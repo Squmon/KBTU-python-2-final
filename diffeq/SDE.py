@@ -1,4 +1,4 @@
-import diffeq.utils.vectors as ve
+import diffeq.utils.vectors as _ve
 import random
 
 
@@ -31,10 +31,10 @@ class rk4_integrator(integrator):
 
 
 class system:
-    def __init__(self, ds_dt: ve.VectorFunction, solver, initials: ve.Vector = None):
+    def __init__(self, ds_dt: _ve.VectorFunction, solver, initials: _ve.Vector = None):
         if initials is None:
-            initials = ve.Vector({i: random.gauss() for i in ds_dt.out_axes})
-        self.state: ve.Vector = initials
+            initials = _ve.Vector({i: random.gauss() for i in ds_dt.out_axes})
+        self.state: _ve.Vector = initials
         self.ds_dt = ds_dt
         self.solver: 'integrator' = solver
 
@@ -44,7 +44,7 @@ class system:
     def run(self, t_end, t_start=0):
         t = t_start
         history = {
-            's': ve.Vector({k:[] for k in self.state.keys()}),
+            's': _ve.Vector({k:[] for k in self.state.keys()}),
             't': []
         }
         while True:

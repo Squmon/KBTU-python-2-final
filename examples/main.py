@@ -1,4 +1,4 @@
-from diffeq.SDE import *
+from diffeq import *
 from diffeq.utils.vectors import *
 
 A = VectorFunction(Vector(
