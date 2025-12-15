@@ -2,23 +2,23 @@ from typing import Callable
 import symbolic as symb
 
 
-class Vector(dict):
+class vector(dict):
     def __getitem__(self, key):
         return super().get(key, 0.0)
     
     def apply_vector_operation(self, b, operation):
         total_keys = set(b.keys()) | set(self.keys())
-        return Vector(
+        return vector(
             {k: operation(self.get(k, 0.0), b.get(k, 0.0)) for k in total_keys}
         )
 
     def apply_scalar_operation(self, scalar, operation):
-        return Vector(
+        return vector(
             {k: operation(v, scalar) for k, v in self.items()}
         )
 
     def __standart_branch(self, b, operation=None):
-        if isinstance(b, Vector) or type(b) is dict:
+        if isinstance(b, vector) or type(b) is dict:
             return self.apply_vector_operation(b, operation)
         else:
             return self.apply_scalar_operation(b, operation)
@@ -51,7 +51,7 @@ class Vector(dict):
         return self.__standart_branch(b, lambda x, y: x/y)
 
     def __neg__(self):
-        return Vector(
+        return vector(
             {k: -v for k, v in self.items()}
         )
 
@@ -60,8 +60,8 @@ class Vector(dict):
         return sum(b.get(k, 0) * self.get(k, 0) for k in total_keys)
 
 
-class VectorFunction(symb.program):
-    def __init__(self, function: Vector[str:Callable] | Callable, input_signature: tuple | set[str], output_signature: tuple | set[str] = None):
+class vector_function(symb.program):
+    def __init__(self, function: vector[str:Callable] | Callable, input_signature: tuple | set[str], output_signature: tuple | set[str] = None):
         self.in_axes: set = set(input_signature)
         self.out_axes = tuple(function.keys()) if output_signature is None else output_signature
         self.__vars: dict['str':symb.variable] = {
@@ -71,10 +71,10 @@ class VectorFunction(symb.program):
         super().__init__(self.foo)
         self.__yacobian = None
 
-    def __call__(self, vec: dict | Vector):
-        return Vector(super().__call__(**vec))
+    def __call__(self, vec: dict | vector):
+        return vector(super().__call__(**vec))
 
-    def yacobian(self, vec: dict | Vector):
+    def yacobian(self, vec: dict | vector):
         if self.__yacobian is not None:
             return self.__yacobian(**vec)
         F = dict()

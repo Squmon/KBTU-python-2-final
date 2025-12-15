@@ -31,10 +31,10 @@ class rk4_integrator(integrator):
 
 
 class system:
-    def __init__(self, ds_dt: _ve.VectorFunction, solver, initials: _ve.Vector = None):
+    def __init__(self, ds_dt: _ve.vector_function, solver, initials: _ve.vector = None):
         if initials is None:
-            initials = _ve.Vector({i: random.gauss() for i in ds_dt.out_axes})
-        self.state: _ve.Vector = initials
+            initials = _ve.vector({i: random.gauss() for i in ds_dt.out_axes})
+        self.state: _ve.vector = initials
         self.ds_dt = ds_dt
         self.solver: 'integrator' = solver
 
@@ -44,7 +44,7 @@ class system:
     def run(self, t_end, t_start=0):
         t = t_start
         history = {
-            's': _ve.Vector({k:[] for k in self.state.keys()}),
+            's': _ve.vector({k:[] for k in self.state.keys()}),
             't': []
         }
         while True:
