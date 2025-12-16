@@ -164,15 +164,15 @@ print(f"Source flow divergence: {div2:.4f} (should be 10)")
 KBTU-python-2-final/
 ├── diffeq/                    # Main library
 │   ├── SDE.py                # System and integrator classes
-│   ├── utils/
-│   │   ├── vectors.py        # Vector operations
-│   │   ├── calculus.py       # Numerical Jacobian/divergence (YOUR CODE)
-│   │   ├── symbolic.py       # Symbolic computation
-│   │   └── string_operations.py
-│   ├── plotting/
-│   │   ├── visualization_tasks.py
-│   │   └── drawing_utils.py
-│   └── __init__.py
+│   └── utils/
+│       ├── vectors.py        # Vector operations
+│       ├── calculus.py       # Numerical Jacobian/divergence (YOUR CODE)
+│       ├── symbolic.py       # Symbolic computation
+│       └── string_operations.py
+├── plotting/
+│   ├── visualization_tasks.py
+│   └── drawing_utils.py
+├── __init__.py
 ├── examples.ipynb            # Jupyter notebook examples
 ├── tests/                    # Test suite
 ├── setup.py                  # Build configuration
