@@ -40,6 +40,9 @@ class vector(dict):
 
     def __pow__(self, b):
         return self.__standart_branch(b, lambda x, y: x**y)
+    
+    def __rpow__(self, b):
+        return self.__standart_branch(b, lambda x, y: y**x)
 
     def __mul__(self, b):
         return self.__standart_branch(b, lambda x, y: x*y)
