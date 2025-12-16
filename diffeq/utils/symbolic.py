@@ -307,7 +307,7 @@ class mul(__node):
             self.v *= i.v
 
     def __str__(self) -> str:
-        return f"({str_sum(*self.p, sep='*')})"
+        return f"{str_sum(*self.p, sep='*')}"
 
     def __mul__(self, b: '__node'):
         return mul(*self.p, to_node(b))

@@ -75,12 +75,15 @@ class vector_function(symb.program):
             k: symb.variable(k) for k in input_signature}
         out = function(**self.__vars)
         self.out_axes = out.keys()
-        self.foo = out
-        super().__init__(self.foo)
+        self.__foo = out
+        super().__init__(self.__foo)
         self.__yacobian = None
 
     def __call__(self, vec: dict | vector):
         return vector(super().__call__(**vec))
+
+    def __str__(self):
+        return vector_function_to_str(self)
 
     def __generate_yacobian(self):
         if self.__yacobian is None:
