@@ -96,11 +96,21 @@ def plot_vector_field(vector_function, x_range=(-5, 5), y_range=(-5, 5), spacing
 
 
 def plot_phase_portrait(vector_func_def, initial_points=None, t_end=10, dt=0.01, solver_class=rk4_integrator, x_range=(-5, 5), y_range=(-5, 5)):
-    plot_vector_field(lambda x, y: vector_func_def(x=x, y=y).get('x'), y, x_range=x_range, y_range=y_range, spacing=0.8, scale_factor=15)
     
-    #построение траекторий
+    def vector_field_wrapper(x, y):
+        v = vector_func_def(x=x, y=y)
+        return v.get('x', 0), v.get('y', 0) 
+        
+    plot_vector_field(
+        lambda x, y: (vector_func_def(x=x, y=y).get('x', 0), vector_func_def(x=x, y=y).get('y', 0)),
+        x_range=x_range, 
+        y_range=y_range, 
+        spacing=0.8, 
+        scale_factor=15
+    )
+    
+    # ... (Остальной код для траекторий)
     if initial_points and initial_points[0]:
-        # Определяем оси
         x_axis = list(initial_points[0].keys())[0] 
         y_axis = list(initial_points[0].keys())[1] 
         vf = vector_function(vector_func_def)
@@ -111,10 +121,12 @@ def plot_phase_portrait(vector_func_def, initial_points=None, t_end=10, dt=0.01,
             # Инициализируем систему
             solver = solver_class(dt)
             initials = vector(initial_state_dict)
-            sys = system(vf, solver, initials=initials)
+            
+        
+            ode_sys = system(vf, solver, initials=initials)
             
             # Вычисляем эволюцию
-            history_vec = sys.run(t_end)
+            history_vec = ode_sys.run(t_end)
             
             #преобразуем историю в список (x, y)
             xy_evolution = _history_to_xy_evolution(history_vec, x_axis, y_axis)
