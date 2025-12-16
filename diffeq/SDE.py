@@ -54,4 +54,6 @@ class system:
             t += self.solver.dt*self.solver.ii
             if t >= t_end:
                 break
-        return history
+        history['s']['time'] = history['t']
+        return history['s']
+

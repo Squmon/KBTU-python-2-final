@@ -389,8 +389,19 @@ class negative(__node):
 
     def __str__(self) -> str:
         return f"(-{str(self.p[0])})"
+    
+    def replace_is_parent_nodes(self, old, new):
+        return self.p[0].replace_is_parent_nodes(old, new)
+
+    def replace_eq_parent_nodes(self, old, new):
+        return self.p[0].replace_eq_parent_nodes(old, new)
+    
+    def replace_eq_parent_node(self, new):
+        return self.p[0].replace_eq_parent_node(new)
 
     def optim(self):
+        if len(self.p) == 0:
+            return None
         if type(self.p[0]) == const:
             return const(-self.p[0].v)
         return super().optim()
@@ -498,13 +509,17 @@ class program:
         self.comp_layers = hsum(*[c.get_deep() for c in self.c.values()])
         self.input_signature = {
             node.name: node for layer in self.comp_layers for node in layer if isinstance(
-                node, variable)}
+                node, variable) and type(node) is not const}
+        self.__consts = {
+            node.name: node for layer in self.comp_layers for node in layer if type(node) is const}
         self.remove_equal_nodes()
         self.comp_layers = hsum(*[c.get_deep() for c in self.c.values()])
 
+
     def __call__(self, **kwargs):
         for name, val in kwargs.items():
-            self.input_signature[name].v = val
+            if name in self.input_signature:
+                self.input_signature[name].v = val
         return self.run()
 
     def run(self) -> dict[str, any]:

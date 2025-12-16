@@ -47,10 +47,10 @@ class vector(dict):
     def __rmul__(self, b):
         return self.__standart_branch(b, lambda x, y: y*x)
 
-    def __rdiv__(self, b):
+    def __rtruediv__(self, b):
         return self.__standart_branch(b, lambda x, y: y/x)
 
-    def __div__(self, b):
+    def __truediv__(self, b):
         return self.__standart_branch(b, lambda x, y: x/y)
 
     def __neg__(self):
@@ -68,16 +68,19 @@ def vector_function_to_str(foo):
 
 
 class vector_function(symb.program):
-    def __init__(self, function: Callable):
-        input_signature = function.__code__.co_varnames
+    def __init__(self, function: Callable, input_signature = None, divergence_axis = 'div'):
+        input_signature = function.__code__.co_varnames[:function.__code__.co_argcount] if input_signature is None else input_signature
         self.in_axes: set = set(input_signature)
         self.__vars: dict['str':symb.variable] = {
             k: symb.variable(k) for k in input_signature}
         out = function(**self.__vars)
+        out = {k:symb.to_node(v) for k, v in out.items()}
         self.out_axes = out.keys()
         self.__foo = out
         super().__init__(self.__foo)
+        self.divergence_axis = divergence_axis
         self.__yacobian = None
+        self.__div = None
 
     def __call__(self, vec: dict | vector):
         return vector(super().__call__(**vec))
@@ -93,15 +96,21 @@ class vector_function(symb.program):
                     inds = 'd' + outa + '_d' + ina
                     F[inds] = self.c[outa].diff(ina)
 
-            self.__yacobian = symb.program(F)
+            __yacobian = symb.program(F)
+            self.__yacobian = vector_function(__yacobian, input_signature = self.input_signature)
 
-    def yacobian(self, vec: dict | vector):
-        self.__generate_yacobian()
-        return vector(self.__yacobian(**vec))
-    
-    def show_yacobian(self):
-        self.__generate_yacobian()
-        return vector_function_to_str(self.__yacobian)
+    def __generate_div(self):
+        if set(self.in_axes) != set(self.out_axes):
+            raise Exception('output axes different from input')
+        if self.__div is None:
+            self.__div = vector_function(lambda **args:vector({self.divergence_axis:sum(self.yacobian(args)[f'd{k}_d{k}'] for k in self.in_axes)}), input_signature=self.input_signature)
 
-    def yacobian_prog(self):
+    @property
+    def div(self):
+        self.__generate_div()
+        return self.__div
+
+    @property
+    def yacobian(self):
+        self.__generate_yacobian()
         return self.__yacobian
