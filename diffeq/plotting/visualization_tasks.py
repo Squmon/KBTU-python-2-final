@@ -1,9 +1,9 @@
 import turtle
 import math
 
-from .drawing_utils import setup_canvas, save_turtle_image 
-from ..integrator import system, rk4_integrator 
-from .vectors import vector, vector_function
+from diffeq.plotting.drawing_utils import setup_canvas, save_turtle_image 
+from diffeq import system, rk4_integrator 
+from diffeq.utils.vectors import vector, vector_function
 def _history_to_xy_evolution(history_vector, x_axis_name='x', y_axis_name='y'):
 
     x_list = history_vector.get(x_axis_name, [])
