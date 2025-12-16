@@ -161,23 +161,25 @@ print(f"Source flow divergence: {div2:.4f} (should be 10)")
 
 ## Project Structure
 
+```bash
 KBTU-python-2-final/
-├── diffeq/                    # Main library
-│   ├── SDE.py                # System and integrator classes
+├── diffeq/
+│   ├── SDE.py
 │   └── utils/
-│       ├── vectors.py        # Vector operations
-│       ├── calculus.py       # Numerical Jacobian/divergence (YOUR CODE)
-│       ├── symbolic.py       # Symbolic computation
+│       ├── vectors.py
+│       ├── calculus.py
+│       ├── symbolic.py
 │       └── string_operations.py
 ├── plotting/
 │   ├── visualization_tasks.py
 │   └── drawing_utils.py
 ├── __init__.py
-├── examples.ipynb            # Jupyter notebook examples
-├── tests/                    # Test suite
-├── setup.py                  # Build configuration
-├── pyproject.toml            # Modern build system
-└── README.md                 # This file
+├── examples.ipynb
+├── tests/
+├── setup.py
+├── pyproject.toml
+└── README.md
+```
 
 ## Testing
 ```bash
