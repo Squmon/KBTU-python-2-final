@@ -4,33 +4,21 @@ from diffeq.utils.vectors import *
 
 @vector_function
 def foo(x, y):
-    return dict(
-        x = 10*y,
-        y = -x,
+    return vector(
+        x = 10*y*x + y,
+        y = -x + (-1),
     )
 
-print(foo(vector(3, 4)))
-quit()
-
-A = vector_function(vector(
-    x = lambda x, y: x,
-    y = lambda x, y: y + x,
-), ('x', 'y'))
-
-B = vector_function(vector(
-    x = lambda x, y: y,
-    y = lambda x, y: x + y,
-), ('x', 'y'))
-
-C = vector_function(lambda **args:B((args)), ('x', 'y'), ('x', 'y'))
-
-S = system(vector_function(
-    vector(
-        x = lambda x, y: -y,
-        y = lambda x, y: x
-    ), ('x', 'y')
-), rk4_integrator(0.01))
-
-print(C(vector(x = 3, y = 2)))
-
+S = system(foo, rk4_integrator(0.01))
 print(len(S.run(10)['s']['x']))
+print(foo)
+print(foo.show_yacobian())
+print(foo.yacobian(vector(
+    x = 1,
+    y = 2
+)))
+
+print(vector(
+    x = 10,
+    y = 100
+))
