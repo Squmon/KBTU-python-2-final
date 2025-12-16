@@ -163,22 +163,33 @@ print(f"Source flow divergence: {div2:.4f} (should be 10)")
 
 ```bash
 KBTU-python-2-final/
-├── diffeq/
-│   ├── SDE.py
-│   └── utils/
-│       ├── vectors.py
-│       ├── calculus.py
-│       ├── symbolic.py
-│       └── string_operations.py
-├── plotting/
-│   ├── visualization_tasks.py
-│   └── drawing_utils.py
-├── __init__.py
-├── examples.ipynb
-├── tests/
-├── setup.py
-├── pyproject.toml
-└── README.md
+├── build/                      # Сборка
+├── diffeq/                     # Основная библиотека
+│   ├── __pycache__/           # Кэш Python
+│   ├── __init__.py
+│   ├── SDE.py                 # Системы и интеграторы
+│   ├── plotting/              # Визуализация
+│   │   ├── __init__.py
+│   │   ├── drawing_utils.py
+│   │   └── visualization_tasks.py
+│   └── utils/                 # Утилиты
+│       ├── __pycache__/
+│       ├── __init__.py
+│       ├── calculus.py        # Численные методы (Якобиан, дивергенция)
+│       ├── string_operations.py
+│       ├── symbolic.py        # Символьные вычисления
+│       └── vectors.py         # Векторные операции
+├── diffeq_lib.egg-info/       # Метаданные пакета
+├── dist/                      # Дистрибутивы
+├── tests/                     # Тесты
+│   └── test_numerical_methods.py
+├── .gitignore                 # Игнорируемые файлы Git
+├── example2.py                # Примеры использования
+├── examples.ipynb             # Jupyter notebook с примерами
+├── pyproject.toml             # Конфигурация сборки
+├── README.md                  # Документация
+├── setup.py                   # Конфигурация установки
+└── tasks.md                   # Задачи
 ```
 
 ## Testing
