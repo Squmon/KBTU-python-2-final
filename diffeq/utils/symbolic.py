@@ -2,10 +2,7 @@ from math import exp
 
 
 def str_sum(*array, sep=''):
-    o = str(array[0])
-    for a in array[1:]:
-        o += sep + str(a)
-    return o
+    return sep.join(str(a) for a in array)
 
 
 def to_node(b):
@@ -92,7 +89,7 @@ class __node:
     def get_deep(self) -> list[list['__node']]:
         dd = {}
         self.__deep__(dd)
-        l = [[]]*max(dd.keys())
+        l = [[] for _ in range(max(dd.keys()) if dd else 0)]
         for i in range(len(dd)):
             l[i] = dd[i + 1]
             h = []
@@ -103,7 +100,7 @@ class __node:
         return l
 
     def __deep__(self, deep_dict):
-        deep = max(p.__deep__(deep_dict) for p in self.p) + 1
+        deep = max((p.__deep__(deep_dict) for p in self.p), default=0) + 1
         if deep in deep_dict:
             deep_dict[deep].append(self)
         else:
@@ -235,6 +232,8 @@ class add(__node):
         self.v = sum(i.v for i in self.p)
 
     def __str__(self) -> str:
+        if len(self.p) == 0:
+            return "0"
         return f"({str_sum(*self.p, sep='+')})"
 
     def __add__(self, b: '__node'):

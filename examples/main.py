@@ -1,6 +1,17 @@
 from diffeq import *
 from diffeq.utils.vectors import *
 
+
+@vector_function
+def foo(x, y):
+    return dict(
+        x = 10*y,
+        y = -x,
+    )
+
+print(foo(vector(3, 4)))
+quit()
+
 A = vector_function(vector(
     x = lambda x, y: x,
     y = lambda x, y: y + x,

@@ -1,8 +1,11 @@
 from typing import Callable
-import symbolic as symb
-
+import diffeq.utils.symbolic as symb
+from diffeq.utils.string_operations import get_table
 
 class vector(dict):
+    def __str__(self):
+        return get_table(('axis', 'value'), [[k, str(v)] for k, v in self.items()])
+
     def __getitem__(self, key):
         return super().get(key, 0.0)
     
@@ -59,32 +62,43 @@ class vector(dict):
         total_keys = set(b.keys()) | set(self.keys())
         return sum(b.get(k, 0) * self.get(k, 0) for k in total_keys)
 
+def vector_function_to_str(foo):
+    d = foo.c
+    return get_table(('axis', 'function'), [[k, str(v)] for k, v in d.items()])
+
 
 class vector_function(symb.program):
-    def __init__(self, function: vector[str:Callable] | Callable, input_signature: tuple | set[str], output_signature: tuple | set[str] = None):
+    def __init__(self, function: Callable):
+        input_signature = function.__code__.co_varnames
         self.in_axes: set = set(input_signature)
-        self.out_axes = tuple(function.keys()) if output_signature is None else output_signature
         self.__vars: dict['str':symb.variable] = {
             k: symb.variable(k) for k in input_signature}
-        self.foo = function(**self.__vars) if callable(function) else {k: function[k](**self.__vars) for k in self.out_axes}
-        print(self.foo)
+        out = function(**self.__vars)
+        self.out_axes = out.keys()
+        self.foo = out
         super().__init__(self.foo)
         self.__yacobian = None
 
     def __call__(self, vec: dict | vector):
         return vector(super().__call__(**vec))
 
-    def yacobian(self, vec: dict | vector):
-        if self.__yacobian is not None:
-            return self.__yacobian(**vec)
-        F = dict()
-        for outa in self.out_axes:
-            for ina in self.in_axes:
-                inds = outa + '_' + ina
-                F[inds] = self.c[outa].diff(ina)
+    def __generate_yacobian(self):
+        if self.__yacobian is None:
+            F = dict()
+            for outa in self.out_axes:
+                for ina in self.in_axes:
+                    inds = 'd' + outa + '_d' + ina
+                    F[inds] = self.c[outa].diff(ina)
 
-        self.__yacobian = symb.program(F)
-        return self.yacobian(vec)
+            self.__yacobian = symb.program(F)
+
+    def yacobian(self, vec: dict | vector):
+        self.__generate_yacobian()
+        return vector(self.__yacobian(**vec))
+    
+    def show_yacobian(self):
+        self.__generate_yacobian()
+        return vector_function_to_str(self.__yacobian)
 
     def yacobian_prog(self):
         return self.__yacobian

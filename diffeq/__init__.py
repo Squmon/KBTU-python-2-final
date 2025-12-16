@@ -1,1 +1,1 @@
-from SDE import *
+from diffeq.SDE import *
