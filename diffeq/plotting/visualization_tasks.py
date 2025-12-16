@@ -97,12 +97,10 @@ def plot_vector_field(vector_function, x_range=(-5, 5), y_range=(-5, 5), spacing
 
 def plot_phase_portrait(vector_func_def, initial_points=None, t_end=10, dt=0.01, solver_class=rk4_integrator, x_range=(-5, 5), y_range=(-5, 5)):
     
-    # 1. СОЗДАНИЕ ОБЕРТКИ для plot_vector_field (БЕЗ ИЗМЕНЕНИЙ ЗДЕСЬ)
     def vector_field_wrapper(x, y):
         v = vector_func_def(x=x, y=y)
         return v.get('x', 0), v.get('y', 0) 
-    
-    # 2. ВЫЗОВ plot_vector_field (БЕЗ ИЗМЕНЕНИЙ ЗДЕСЬ)
+        
     plot_vector_field(
         lambda x, y: (vector_func_def(x=x, y=y).get('x', 0), vector_func_def(x=x, y=y).get('y', 0)),
         x_range=x_range, 
@@ -124,11 +122,10 @@ def plot_phase_portrait(vector_func_def, initial_points=None, t_end=10, dt=0.01,
             solver = solver_class(dt)
             initials = vector(initial_state_dict)
             
-            # ИЗМЕНЕНИЕ 1: sys -> ode_sys
+        
             ode_sys = system(vf, solver, initials=initials)
             
             # Вычисляем эволюцию
-            # ИЗМЕНЕНИЕ 2: sys.run -> ode_sys.run
             history_vec = ode_sys.run(t_end)
             
             #преобразуем историю в список (x, y)
