@@ -209,3 +209,12 @@ python -m build --wheel
 
 # The wheel file will be created in dist/diffeq_lib-0.1.0-py3-none-any.whl
 ```
+
+This part of the library uses the Turtle module to turn math into pictures. We built it so you can see phase portraits and vector fields without needing to install big libraries like Matplotlib.
+What it does:
+
+Auto-Scaling: You don't have to worry about pixels. Just give it math coordinates (like -5 to 5), and it fits them to the window automatically.Vector Fields: Draws those blue arrows that show where the system is "flowing.
+"Multi-color Lines: If you plot several trajectories, it gives each one a different color so they don't get mixed up.
+Fast Mode: Uses tracer(0,0) so the drawing happens almost instantly instead of watching the turtle walk around.
+
+ 
