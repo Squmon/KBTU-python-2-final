@@ -5,18 +5,14 @@ from diffeq.plotting.drawing_utils import setup_canvas
 from diffeq import system, rk4_integrator
 from diffeq.utils.vectors import vector, vector_function
 
-# ======================
-# ВСПОМОГАТЕЛЬНОЕ
-# ======================
+#преобразование истории в список (x,y)
 
 def _history_to_xy_evolution(history, x_name="x", y_name="y"):
     xs = history.get(x_name, [])
     ys = history.get(y_name, [])
     return list(zip(xs, ys))
 
-# ======================
-# ТРАЕКТОРИЯ
-# ======================
+#траектория
 
 def plot_trajectory(xy, scale, turt, color="red", thickness=1):
     if not xy:
@@ -36,9 +32,7 @@ def plot_trajectory(xy, scale, turt, color="red", thickness=1):
         sx, sy = scale(x, y)
         turt.goto(sx, sy)
 
-# ======================
-# ВЕКТОРНОЕ ПОЛЕ
-# ======================
+#векторное поле
 
 def plot_vector_field(vf_xy, scale, x_range, y_range, spacing=0.8, scale_factor=15):
     vec = turtle.Turtle()
@@ -69,9 +63,7 @@ def plot_vector_field(vf_xy, scale, x_range, y_range, spacing=0.8, scale_factor=
             y += spacing
         x += spacing
 
-# ======================
-# ФАЗОВЫЙ ПОРТРЕТ
-# ======================
+#фазовый портрет
 
 def plot_phase_portrait(
     vector_func_def,
