@@ -61,7 +61,6 @@ KBTU-python-2-final/
 ├── tests/                      # Tests
 │   └── test_numerical_methods.py
 ├── .gitignore                  # Git ignore files
-├── example2.py                 # Usage examples
 ├── examples.ipynb              # Jupyter notebook with examples
 ├── pyproject.toml              # Build configuration
 ├── README.md                   # Documentation
