@@ -216,5 +216,3 @@ What it does:
 Auto-Scaling: You don't have to worry about pixels. Just give it math coordinates (like -5 to 5), and it fits them to the window automatically.Vector Fields: Draws those blue arrows that show where the system is "flowing.
 "Multi-color Lines: If you plot several trajectories, it gives each one a different color so they don't get mixed up.
 Fast Mode: Uses tracer(0,0) so the drawing happens almost instantly instead of watching the turtle walk around.
-
- 

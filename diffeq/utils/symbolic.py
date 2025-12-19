@@ -1,4 +1,4 @@
-from math import exp
+import math
 
 
 def str_sum(*array, sep=''):
@@ -406,6 +406,53 @@ class negative(__node):
             return const(-self.p[0].v)
         return super().optim()
 
+class cos(__node):
+    def __init__(self, parent) -> None:
+        super().__init__("cos_node", parent)
+
+    def diff(self, param_name) -> '__node':
+        return mul(negative(sin(self.p[0])), self.p[0].diff(param_name))
+
+    def get_value(self):
+        return math.cos(self.p[0].get_value())
+
+    def update_value(self):
+        self.v = math.cos(self.p[0].v)
+
+    def __str__(self) -> str:
+        return f"cos({str(self.p[0])})"
+
+class sin(__node):
+    def __init__(self, parent) -> None:
+        super().__init__("sin_node", parent)
+
+    def diff(self, param_name) -> '__node':
+        return mul(cos(self.p[0]), self.p[0].diff(param_name))
+
+    def get_value(self):
+        return math.sin(self.p[0].get_value())
+
+    def update_value(self):
+        self.v = math.sin(self.p[0].v)
+
+    def __str__(self) -> str:
+        return f"sin({str(self.p[0])})"
+
+class exp(__node):
+    def __init__(self, parent) -> None:
+        super().__init__("exp_node", parent)
+
+    def diff(self, param_name) -> '__node':
+        return mul(exp(self.p[0]), self.p[0].diff(param_name))
+
+    def get_value(self):
+        return math.exp(self.p[0].get_value())
+
+    def update_value(self):
+        self.v = math.exp(self.p[0].v)
+
+    def __str__(self) -> str:
+        return f"exp({str(self.p[0])})"
 
 class reverse(__node):
     def __init__(self, parent) -> None:
@@ -441,10 +488,10 @@ class sigmoid(__node):
         return mul(q, add(to_node(1), negative(q)), self.p[0].diff(param_name))
 
     def get_value(self):
-        return 1/(1+exp(-self.p[0].get_value()))
+        return 1/(1+math.exp(-self.p[0].get_value()))
 
     def update_value(self):
-        self.v = 1/(1+exp(-self.p[0].v))
+        self.v = 1/(1+math.exp(-self.p[0].v))
 
     def __str__(self) -> str:
         return f"q({str(self.p[0])})"
