@@ -1,7 +1,7 @@
 ## Utils
 
 ### symbolic
-реализует операции с символами
+implements operations with symbols
 ```python
 from diffeq.utils.symbolic import *
 x, y = variable('x'), variable('y')
@@ -9,41 +9,41 @@ expression = x**2 + y*x + cos(x) + 3
 
 print(expression)
 
-print('без оптимизаций:')
+print('without optimizations:')
 print(expression.diff('x'))
 print(expression.diff('y'))
-print('с оптимизациями:')
+print('with optimizations:')
 
 print(expression.diff('x').optim())
 print(expression.diff('y').optim())
 
-print('дважды производная:')
+print('second derivative:')
 print(expression.diff('x').diff('x').optim())
 
 
-print('упаковка в "программы"')
+print('packaging into "programs"')
 
 prog = program({'output':expression})
 prog(x = 1, y = 2)
 
 
-print('порядок выполнения:')
+print('execution order:')
 print(prog)
 ```
 
 Output:
 ```
 ((x^2)+y*x+cos(x)+3)
-без оптимизаций:
+without optimizations:
 (2*(x^1)*1.0+(0.0*x+y*1.0)+(-sin(x))*1.0+0.0)
 (2*(x^1)*0.0+(1.0*x+y*0.0)+(-sin(x))*0.0+0.0)
-с оптимизациями:
+with optimizations:
 (x*2+y+sin(x)*-1)
 x
-дважды производная:
+second derivative:
 ((1^2)*(x^0)*2+cos(x)*-1)
-упаковка в "программы"
-порядок выполнения:
+packaging into "programs"
+execution order:
 x,y,3
 (x^2),y*x,cos(x)
 ((x^2)+y*x+cos(x)+3)
@@ -52,18 +52,18 @@ x,y,3
 ### vectors
 
 #### basic operations
-наследуется от `dict`
+inherits from `dict`
 ```python
-# наследник dict
+# inherits from dict
 class vector(dict):...
 ```
 
-Ключи - название оси
-Значение - значение проекции вектора на соответствующую ось
+Keys - axis names  
+Values - projection values of the vector on the corresponding axis  
 
-При сложении/скалярном произведении/поэлентных операциях соответствующие ключи будут складыватся, а при несовпадении ключей будет предполагатся что отсутствующие ключи имеют значение ноль
+When adding/scalar multiplying/element-wise operations, corresponding keys will be added, and in case of mismatched keys, it will be assumed that missing keys have a value of zero.
 
-Пример:
+Example:
 ``` python
 >>> from diffeq.utils.vectors import *
 >>> A = vector(x = 10, y = 10)      
@@ -164,7 +164,7 @@ A@A: 200
 ```
 
 #### vector functions
-Реализуют методы для работы с векторными функциями. Наследуются от `program` из symbolic
+Implements methods for working with vector functions. Inherits from `program` in symbolic.
 ```python
 @vector_function
 def foo(x, y):
@@ -179,9 +179,9 @@ print('function form: ', sep = '\n')
 print(foo)
 print('function output: ', sep = '\n')
 print(foo(v))
-print("function's yacobian: ", sep = '\n')
+print("function's Jacobian: ", sep = '\n')
 print(foo.yacobian)
-print("function's yacobian value: ", sep = '\n')
+print("function's Jacobian value: ", sep = '\n')
 print(foo.yacobian(v))
 ```
 
@@ -208,7 +208,7 @@ function output:
 │x    │1111     │
 │y    │10       │
 └───────────────┘
-function's yacobian: 
+function's Jacobian: 
 ┌────────────────────────────┐
 │axis     │function          │
 ├─────────┼──────────────────┤
@@ -217,7 +217,7 @@ function's yacobian:
 │dy_dx    │1.0               │
 │dy_dy    │0.0               │
 └────────────────────────────┘
-function's yacobian value: 
+function's Jacobian value: 
 ┌────────────────────┐
 │axis     │value     │
 ├─────────┼──────────┤
@@ -302,8 +302,8 @@ A = vector(x = 1, y = 2)
 ## plotting
 
 interactive.py
-предоставляет сгенерировать интерактивный html содержащий в себе одну или более траекторий.
-Если возможность задавать цвет и стиль отображения
+provides the ability to generate an interactive HTML containing one or more trajectories.  
+It allows setting the color and display style.
 ```python
 def generate_html(trajectores:list[vector], axes:tuple[str], path = 'output.html', color:callable = __basic_grad, title:str = ''):...
 ```
@@ -323,14 +323,14 @@ lorenz_sys = system(
     vector_function(lambda x, y, z:vector(x = a*(x - y), y = b*x - y - z*x, z = x*y + c*z)), solver
     )
 
-# просчет траекторий
+# calculating trajectories
 lorenz_trjs = []
 for _ in range(10):
     lorenz_sys.state = vector(x = gauss(), y = gauss(), z = gauss())
     results = lorenz_sys.run(10)
     lorenz_trjs.append(results)
 
-# сохранение
+# saving
 out = interactive.generate_html(lorenz_trjs, ('x', 'y', 'z'), color = interactive.start_end_grad(), title = 'Lorenz Attractor', path = 'output/lorenz.html')
 ```
 [Output:](output/lorenz.html)
@@ -339,9 +339,9 @@ out = interactive.generate_html(lorenz_trjs, ('x', 'y', 'z'), color = interactiv
 
 
 
-стили отображения выглядят так (но разницы, как правило не заметно при длинных траекториях):
+display styles look like this (but the difference is usually not noticeable for long trajectories):
 ```python
-# затухающий хвост
+# fading tail
 def basic_grad(color = None, transparent_coof = 1.0):
     Col = color
     bias = randint(0, 100)
@@ -353,7 +353,7 @@ def basic_grad(color = None, transparent_coof = 1.0):
         return color + [t*transparent_coof]
     return f
 
-# затухающий хвост и глова
+# fading tail and head
 def start_end_grad(color = None, transparent_coof = 1.0):
     Col = color
     bias = randint(0, 100)
@@ -373,19 +373,19 @@ abstract class for numerical integration:
 ```python 
 class integrator: ...
 ```
-Реализованные интеграторы:
+Implemented integrators:
 ```python 
 class euler_integrator(integrator): ...
 class rk4_integrator(integrator):...
 ```
-по умолчанию интеграторы при вызове 
+By default, integrators when called 
 ```python
 solver.integrate(x, dx)
 ```
-будут делать `int(1/dt)` за вызов.
+will perform `int(1/dt)` per call.
 
 ### system
-system отвечает за pipeline интегрирования
+system is responsible for the integration pipeline
 ```python
 class system:
     def __init__(self, ds_dt: _ve.vector_function, solver, initials: _ve.vector = None):...
