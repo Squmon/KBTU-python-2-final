@@ -209,3 +209,5 @@ __marimo__/
 
 # trash
 .trash
+.temp
+__converter.py

@@ -65,9 +65,9 @@ When adding/scalar multiplying/element-wise operations, corresponding keys will 
 
 Example:
 ``` python
->>> from diffeq.utils.vectors import *
->>> A = vector(x = 10, y = 10)      
->>> B = vector(x = 3, y = -1, z = 1)
+    from diffeq.utils.vectors import *
+    A = vector(x = 10, y = 10)      
+    B = vector(x = 3, y = -1, z = 1)
 >>> print('A:', A, sep = '\n'*2)
 A:
 
