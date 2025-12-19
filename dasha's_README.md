@@ -1,8 +1,8 @@
-VISUALIZATION PART: 
+## VISUALIZATION PART: 
 
 This part of the library uses the Turtle module to turn math into pictures. We built it so you can see phase portraits and vector fields without needing to install big libraries like Matplotlib.
 
-What it does:
+### What it does:
 
 Auto-Scaling: You don't have to worry about pixels. Just give it math coordinates (like -5 to 5), and it fits them to the window automatically.
 
@@ -12,7 +12,8 @@ Vector Fields: Draws those blue arrows that show where the system is "flowing.
 
 Fast Mode: Uses tracer(0,0) so the drawing happens almost instantly instead of watching the turtle walk around.
 
-1. Just drawing lines (Trajectories)If you already have a list of $(x, y)$ points, you can just throw them into draw_phase_portrait() function
+### Drawing trajectories 
+1. If you already have a list of $(x, y)$ points, you can just throw them into draw_phase_portrait() function
 ```python
 
 from diffeq.plotting.visualization_tasks import draw_phase_portrait, generate_spiral_trajectories
@@ -36,7 +37,7 @@ starts = [{'x': 2, 'y': 0}, {'x': 0, 'y': 2}]
 #plotting
 plot_phase_portrait(my_system, initial_points=starts, x_range=(-4, 4), y_range=(-4, 4))
 ```
-Main functions:
+## Main functions:
 
 1. plot_phase_portrait: The big one. Draws the vector field (blue arrows) and then runs the solver to draw trajectories (colored lines).
 
@@ -45,11 +46,11 @@ Main functions:
 3. save_turtle_image: Saves your masterpiece as a .eps file (handy for reports).
 
 
- EXAMPLE 
+ ## EXAMPLE 
 
  In this example we modeled a damped oscillator. You can see the trajectories spiraling inward-this is a classic sink in differential equations. Our library handles the numerical integration and then uses the Turtle module to draw these paths.
  
- Initial input:
+ ### Initial input:
  ```python
  for x0, y0 in [(4,0), (3,2), (2,-3), (-3,3)]:
 ```
@@ -58,10 +59,10 @@ Main functions:
  dx = y
 dy = -x - 0.2*y  
 ```
-OUTPUT:
+### OUTPUT:
 
 ![alt text](image.png)
 
-CONCLUSION:
+## CONCLUSION:
 
 This visualisation module turns numbers into clear pictures.
