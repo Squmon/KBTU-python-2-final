@@ -22,11 +22,11 @@ pip install dist/diffeq_lib-0.1.0-py3-none-any.whl
 ### From Source
 ```bash
 
-# Clone the repository
+#cloning the repository
 git clone https://github.com/Squmon/KBTU-python-2-final.git
 cd KBTU-python-2-final
 
-# Install the package
+#installing the package 
 pip install .
 ```
 
@@ -39,11 +39,11 @@ python -c "from diffeq.utils.calculus import jacobian, divergence; print('✅ Yo
 ## Quick Start
 ```python
 
-# Import YOUR numerical calculus methods
+#inporting numerical calculus methods
 from diffeq.utils.calculus import jacobian, divergence
 from diffeq.utils.vectors import vector
 
-# Define a vector field for analysis
+#defining a vector field for analysis
 def vector_field(state):
     x, y = state['x'], state['y']
     return vector({
@@ -51,10 +51,10 @@ def vector_field(state):
         'y': x + y**2       # y-component
     })
 
-# Point to analyze
+#pointing to analyze
 point = vector({'x': 2.0, 'y': 3.0})
 
-# Use YOUR numerical methods
+#usage of numerical methods
 J = jacobian(vector_field, point)  # Numerical Jacobian
 div = divergence(vector_field, point)  # Numerical divergence
 
@@ -64,7 +64,7 @@ print(f"  [ {J['dx_dx']:.2f}  {J['dx_dy']:.2f} ]")
 print(f"  [ {J['dy_dx']:.2f}  {J['dy_dy']:.2f} ]")
 print(f"Divergence: {div:.2f}")
 
-# Optional: Solve the system (Ilya's part)
+#optionally: solving the system (Ilya's part)
 from diffeq import system, rk4_integrator
 
 solver = rk4_integrator(0.01)
@@ -201,18 +201,56 @@ python tests/test_numerical_methods.py
 ## Building from Source
 ```bash
 
-# Install build tools
+#installing build tools
 pip install build wheel
 
-# Build the distribution
+#building the distribution
 python -m build --wheel
 
-# The wheel file will be created in dist/diffeq_lib-0.1.0-py3-none-any.whl
+#the wheel file will be created in dist/diffeq_lib-0.1.0-py3-none-any.whl
 ```
 
+VISUALIZATION PART: 
+
 This part of the library uses the Turtle module to turn math into pictures. We built it so you can see phase portraits and vector fields without needing to install big libraries like Matplotlib.
+
 What it does:
 
-Auto-Scaling: You don't have to worry about pixels. Just give it math coordinates (like -5 to 5), and it fits them to the window automatically.Vector Fields: Draws those blue arrows that show where the system is "flowing.
+Auto-Scaling: You don't have to worry about pixels. Just give it math coordinates (like -5 to 5), and it fits them to the window automatically.
+
+Vector Fields: Draws those blue arrows that show where the system is "flowing.
+
 "Multi-color Lines: If you plot several trajectories, it gives each one a different color so they don't get mixed up.
+
 Fast Mode: Uses tracer(0,0) so the drawing happens almost instantly instead of watching the turtle walk around.
+
+1. Just drawing lines (Trajectories)If you already have a list of $(x, y)$ points, you can just throw them into draw_phase_portrait() function
+```python
+
+from diffeq.plotting.visualization_tasks import draw_phase_portrait, generate_spiral_trajectories
+data = generate_spiral_trajectories()
+draw_phase_portrait(data, x_range=(-5, 5), y_range=(-5, 5))
+
+
+2. The full phase portrait (Arrows + Lines)
+When you give a fuction some initial points and system function it displays everything on a phase portrait.
+
+from diffeq.plotting.visualization_tasks import plot_phase_portrait
+
+#defining a system
+def my_system(x, y):
+    return {'x': y, 'y': -x - 0.5 * y}
+
+#picking starting points
+starts = [{'x': 2, 'y': 0}, {'x': 0, 'y': 2}]
+
+#plotting
+plot_phase_portrait(my_system, initial_points=starts, x_range=(-4, 4), y_range=(-4, 4))
+
+Main functions:
+
+1. plot_phase_portrait: The big one. Draws the vector field (blue arrows) and then runs the solver to draw trajectories (colored lines).
+
+2. setup_canvas: Sets up the window, draws the X and Y axes, and handles the scaling logic.
+
+3. save_turtle_image: Saves your masterpiece as a .eps file (handy for reports).
