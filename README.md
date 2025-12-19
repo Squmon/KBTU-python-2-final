@@ -163,33 +163,33 @@ print(f"Source flow divergence: {div2:.4f} (should be 10)")
 
 ```bash
 KBTU-python-2-final/
-├── build/                      # Сборка
-├── diffeq/                     # Основная библиотека
-│   ├── __pycache__/           # Кэш Python
+├── build/                      # Build artifacts
+├── diffeq/                     # Main library
+│   ├── __pycache__/            # Python cache
 │   ├── __init__.py
-│   ├── SDE.py                 # Системы и интеграторы
-│   ├── plotting/              # Визуализация
+│   ├── SDE.py                  # Systems and integrators
+│   ├── plotting/               # Visualization
 │   │   ├── __init__.py
 │   │   ├── drawing_utils.py
 │   │   └── visualization_tasks.py
-│   └── utils/                 # Утилиты
+│   └── utils/                  # Utilities
 │       ├── __pycache__/
 │       ├── __init__.py
-│       ├── calculus.py        # Численные методы (Якобиан, дивергенция)
+│       ├── calculus.py         # Numerical methods (Jacobian, divergence)
 │       ├── string_operations.py
-│       ├── symbolic.py        # Символьные вычисления
-│       └── vectors.py         # Векторные операции
-├── diffeq_lib.egg-info/       # Метаданные пакета
-├── dist/                      # Дистрибутивы
-├── tests/                     # Тесты
+│       ├── symbolic.py         # Symbolic computations
+│       └── vectors.py          # Vector operations
+├── diffeq_lib.egg-info/        # Package metadata
+├── dist/                       # Distribution files
+├── tests/                      # Tests
 │   └── test_numerical_methods.py
-├── .gitignore                 # Игнорируемые файлы Git
-├── example2.py                # Примеры использования
-├── examples.ipynb             # Jupyter notebook с примерами
-├── pyproject.toml             # Конфигурация сборки
-├── README.md                  # Документация
-├── setup.py                   # Конфигурация установки
-└── tasks.md                   # Задачи
+├── .gitignore                  # Git ignore files
+├── example2.py                 # Usage examples
+├── examples.ipynb              # Jupyter notebook with examples
+├── pyproject.toml              # Build configuration
+├── README.md                   # Documentation
+├── setup.py                    # Installation configuration
+└── tasks.md                    # Tasks
 ```
 
 ## Testing
