@@ -61,7 +61,7 @@ dy = -x - 0.2*y
 ```
 ### OUTPUT:
 
-![alt text](image.png)
+![alt text](images/2d_phase_space.png)
 
 ## CONCLUSION:
 
