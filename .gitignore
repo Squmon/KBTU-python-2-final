@@ -10,7 +10,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
+#dist/
 downloads/
 eggs/
 .eggs/
@@ -211,3 +211,5 @@ __marimo__/
 .trash
 .temp
 __converter.py
+
+examples/output/*.html

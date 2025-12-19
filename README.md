@@ -9,12 +9,23 @@ A Python library for solving, analyzing, and visualizing differential equations 
 - **Vector Operations**: Custom vector class with mathematical operations
 - **Visualization**: Phase portraits, trajectories, vector fields using Turtle
 - **Numerical Calculus**: Numerical Jacobian and divergence computation
+
+## Building from Source
+If you want to use this as a library instead of copying the entire repository for each project:
+```bash
+#installing build tools
+pip install build wheel
+
+#building the distribution
+python -m build --wheel
+
+#the wheel file will be created in dist/diffeq_lib-0.1.0-py3-none-any.whl
+```
 <!--SLIDE_END-->
+
 ## Installation
 
-### From Wheel File (Recommended)
-The package is already built. Your wheel file is in `dist/diffeq_lib-0.1.0-py3-none-any.whl`.
-
+### From Wheel File
 ```bash
 pip install dist/diffeq_lib-0.1.0-py3-none-any.whl
 ```
@@ -31,15 +42,13 @@ pip install .
 
 ### Verify Installation
 ```bash
-
-python -c "from diffeq.utils.calculus import jacobian, divergence; print('Your numerical calculus methods are installed!')"
+python -c "from diffeq import *; print('success')"
 ```
 <!--SLIDE_END-->
 ## Project Structure
 
 ```bash
 KBTU-python-2-final/
-├── build/                      # Build artifacts
 ├── diffeq/                     # Main library
 │   ├── __init__.py
 │   ├── SDE.py                  # Systems and integrators
@@ -53,30 +62,14 @@ KBTU-python-2-final/
 │       ├── string_operations.py
 │       ├── symbolic.py         # Symbolic computations
 │       └── vectors.py          # Vector operations
-├── diffeq_lib.egg-info/        # Package metadata
-├── dist/                       # Distribution files
 ├── tests/                      # Tests
 │   └── test_numerical_methods.py
 ├── .gitignore                  # Git ignore files
-├── examples.ipynb              # Jupyter notebook with examples
 ├── pyproject.toml              # Build configuration
 ├── README.md                   # Documentation
 ├── setup.py                    # Installation configuration
 └── tasks.md                    # Tasks
 ```
-<!--SLIDE_END-->
-## Building from Source
-```bash
-#installing build tools
-pip install build wheel
-
-#building the distribution
-python -m build --wheel
-
-#the wheel file will be created in dist/diffeq_lib-0.1.0-py3-none-any.whl
-```
-
-
 <!--SLIDE_END-->
 # Nurzhan's part
 ## Numerical Jacobian & Divergence/Library Packaging

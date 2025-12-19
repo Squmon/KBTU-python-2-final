@@ -1,0 +1,15 @@
+from diffeq.utils.vectors import *
+A = vector(x = 10, y = 10)
+B = vector(x = 3, y = -1, z = 1)
+
+print('A:', A, sep = '\n'*2)
+print('B:', B, sep = '\n'*2)
+print('A + B:', A + B, sep = '\n'*2)
+print('A - B:', A - B, sep = '\n'*2)
+print('A @ B:', A @ B, sep = '\n'*2)
+print('A * B:', A * B, sep = '\n'*2)
+print('A / B:', A / B, sep = '\n'*2)
+print('A ** B:', A ** B, sep = '\n'*2)
+print('A**2:', A**2, sep = '\n'*2)
+print('2**A:', 2**A, sep = '\n'*2)
+print('A@A:', A@A)
