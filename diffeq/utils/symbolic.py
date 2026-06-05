@@ -267,7 +267,7 @@ class add(__node):
         self.__optim_local_func__()
         k = []
         for p in self.p:
-            if not (p == None or (type(p) == const and p.v == 0)):
+            if not (p is None or (type(p) == const and p.v == 0)):
                 if type(p) == add:
                     k += p.get_optim_p()
                 else:
@@ -283,7 +283,7 @@ class add(__node):
             return self
         else:
             if l == 0:
-                return None
+                return const(0)
             if l == 1:
                 return self.p[0]
 
@@ -342,7 +342,7 @@ class mul(__node):
         NEGAT = 0
         for p in self.p:
             if (type(p) == const and p.v == 0):
-                return None
+                return const(0)
 
             if not (p == None or (type(p) == const and p.v == 1)):
                 if type(p) == mul:
